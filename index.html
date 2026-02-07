@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBONARIUM AGRO CHIKULAY | Центр Агро-Моніторингу</title>
+    <meta name="description"
+        content="Інтерактивний дашборд для моніторингу аграрного сектору України та світу. Технології, інновації та аналітика ринку.">
+    <meta name="keywords" content="агро новини, моніторинг агро, сільське господарство, агротехнології, Україна">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600&subset=cyrillic&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/uk.js"></script>
+</head>
+
+<body>
+    <div class="monitor-container">
+        <canvas id="starfield"></canvas>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-section">
+                <h1>🚜 IBONARIUM <br> AGRO CHIKULAY</h1>
+                <div class="subtitle">ЦЕНТР АГРО-МОНІТОРИНГУ ТА КЕРУВАННЯ</div>
+            </div>
+            <div class="publication-info">
+                <p>НЕЗАЛЕЖНИЙ АГРО-СТЕНД. Моніторинг ринку сільського господарства, технологічних інновацій та світових
+                    котирувань в режимі реального часу. Працює з 7 лютого 2026 року.</p>
+            </div>
+            <div class="meta-section">
+                <div id="live-clock" class="clock">00:00:00</div>
+                <div id="date-display" class="date">----</div>
+            </div>
+        </header>
+
+        <!-- TICKER -->
+        <div class="ticker-wrap">
+            <div class="ticker-heading">БЛИСКАВКА:</div>
+            <div class="ticker" id="news-ticker">
+                <div class="ticker-item">Завантаження агро-моніторингу...</div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT AREA WITH SIDEBAR -->
+        <div class="main-content-wrapper">
+            <!-- SIDEBAR: HOT STREAM (Agro-flow to the side) -->
+            <aside class="sidebar-stream">
+                <div class="module-header header-hot">
+                    <h3 style="margin:0; font-size: 0.9rem; letter-spacing: 2px;">АГРО-ПОТІК</h3>
+                    <div style="font-size: 0.7rem; color: var(--accent-red); font-weight: 700;">LIVE</div>
+                </div>
+                <div class="hot-stream-vertical" id="main-hot-stream">
+                    <!-- News items injected here -->
+                </div>
+            </aside>
+
+            <!-- MAIN GRID -->
+            <main class="grid-layout">
+                <!-- COL 1: AGRO UKRAINE -->
+                <section class="grid-col col-society">
+                    <div class="module large-module" id="agro-ua-news">
+                        <div class="module-header header-society" style="border-left: 4px solid #2ed573;">
+                            <h2>АГРО УКРАЇНА</h2>
+                            <div class="refresh-timer">Оновлення: <span id="timer-world">60</span>с</div>
+                        </div>
+                        <div class="visual-display main-visual" id="agro-ua-visual"></div>
+                        <div class="content-stream" id="agro-ua-stream"></div>
+                    </div>
+                </section>
+
+                <!-- COL 2: WORLD AGRO -->
+                <section class="grid-col col-physics">
+                    <div class="module" id="world-agro-news">
+                        <div class="module-header header-physics" style="border-left: 4px solid #feca57;">
+                            <h2>СВІТОВІ АГРОНОВИНИ</h2>
+                        </div>
+                        <div class="visual-display" id="world-agro-visual"></div>
+                        <div class="content-stream" id="world-agro-stream"></div>
+                    </div>
+                </section>
+
+                <!-- COL 3: MACHINERY -->
+                <section class="grid-col col-nature">
+                    <div class="module" id="tech-agro-news">
+                        <div class="module-header header-tech" style="border-left: 4px solid #0abde3;">
+                            <h2>АГРО ТЕХНІКА & ШІ</h2>
+                        </div>
+                        <div class="visual-display" id="tech-agro-visual"></div>
+                        <div class="content-stream" id="tech-agro-stream"></div>
+                    </div>
+                </section>
+
+                <!-- COL 4: INNOVATIONS & ANALYTICS -->
+                <section class="grid-col col-lifestyle">
+                    <div class="module analytics-module">
+                        <div class="module-header header-analytics">
+                            <h2>РИНКОВИЙ ТОНУС</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                        <div class="stats-row">
+                            <div class="stat-box">
+                                <span class="stat-label">Зростання/Позитив</span>
+                                <span class="stat-value positive" id="stat-pos">0%</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Ризики/Негатив</span>
+                                <span class="stat-value negative" id="stat-neg">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module" id="innov-agro-news">
+                        <div class="module-header header-bio" style="border-left: 4px solid #ff6b6b;">
+                            <h2>НОВИНКИ ТА ІННОВАЦІЇ</h2>
+                        </div>
+                        <div class="visual-display" id="innov-agro-visual"></div>
+                        <div class="content-stream" id="innov-agro-stream"></div>
+                    </div>
+                </section>
+                <div class="module utility-module">
+                    <div class="module-header">
+                        <h2>СИСТЕМНІ ДАНІ</h2>
+                    </div>
+                    <div class="data-log" id="system-log">
+                        <!-- Logs -->
+                    </div>
+                </div>
+            </main>
+        </div><!-- End main-content-wrapper -->
+
+        <footer>
+            <div class="footer-content">
+                <span>Статус API: АКТИВНИЙ</span>
+                <span>Джерела: AgroPortal, Kurkul, Latifundist, AgroTimes, WorldGrain</span>
+                <span>Версія: 4.2.0 (AGRO-CHIKULAY)</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
