@@ -73,55 +73,57 @@
 
                 <!-- COL 2: WORLD AGRO -->
                 <section class="grid-col col-physics">
-                    <div class="module" id="world-agro-news">
-                        <div class="module-header header-physics" style="border-left: 4px solid #feca57;">
-                            <h2>СВІТОВІ АГРОНОВИНИ</h2>
+                <!-- COL 1: ANALYTICS & TECH (Reorganized) -->
+                <div class="column">
+                    <!-- ANALYTICS SECTION -->
+                    <section class="module analytics-section" style="margin-bottom: 20px;">
+                        <div class="module-header">
+                            <h2 class="module-title">РИНКОВИЙ ТОНУС</h2>
                         </div>
-                        <div class="visual-display" id="world-agro-visual"></div>
-                        <div class="content-stream" id="world-agro-stream"></div>
-                    </div>
-                </section>
-
-                <!-- COL 3: MACHINERY -->
-                <section class="grid-col col-nature">
-                    <div class="module" id="tech-agro-news">
-                        <div class="module-header header-tech" style="border-left: 4px solid #0abde3;">
-                            <h2>АГРО ТЕХНІКА & ШІ</h2>
-                        </div>
-                        <div class="visual-display" id="tech-agro-visual"></div>
-                        <div class="content-stream" id="tech-agro-stream"></div>
-                    </div>
-                </section>
-
-                <!-- COL 4: INNOVATIONS & ANALYTICS -->
-                <section class="grid-col col-lifestyle">
-                    <div class="module analytics-module">
-                        <div class="module-header header-analytics">
-                            <h2>РИНКОВИЙ ТОНУС</h2>
-                        </div>
-                        <div class="chart-container">
+                        <div id="sentiment-chart-container">
                             <canvas id="sentimentChart"></canvas>
                         </div>
-                        <div class="stats-row">
-                            <div class="stat-box">
-                                <span class="stat-label">Зростання/Позитив</span>
-                                <span class="stat-value positive" id="stat-pos">0%</span>
-                            </div>
-                            <div class="stat-box">
-                                <span class="stat-label">Ризики/Негатив</span>
-                                <span class="stat-value negative" id="stat-neg">0%</span>
-                            </div>
+                        <div class="analytics-legend">
+                            <div class="legend-item"><span class="dot" style="background: var(--acc-green);"></span>Зростання/Позитив</div>
+                            <div class="legend-item"><span class="dot" style="background: var(--accent-red);"></span>Ризики/Негатив</div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="module" id="innov-agro-news">
-                        <div class="module-header header-bio" style="border-left: 4px solid #ff6b6b;">
-                            <h2>НОВИНКИ ТА ІННОВАЦІЇ</h2>
+                    <section class="module" id="mod-tech_agro">
+                        <div class="module-header">
+                            <h2 class="module-title">АГРО ТЕХНІКА & ШІ</h2>
                         </div>
-                        <div class="visual-display" id="innov-agro-visual"></div>
-                        <div class="content-stream" id="innov-agro-stream"></div>
-                    </div>
-                </section>
+                        <div class="news-list"></div>
+                    </section>
+                </div>
+
+                <!-- COL 2: AGRO UKRAINE (Main focus center now) -->
+                <div class="column">
+                    <section class="module" id="mod-agro_ua">
+                        <div class="module-header">
+                            <h2 class="module-title">АГРО УКРАЇНА</h2>
+                        </div>
+                        <div class="news-list large-list"></div>
+                    </section>
+                </div>
+
+                <!-- COL 3: WORLD & INNOVATIONS -->
+                <div class="column">
+                    <section class="module" id="mod-world_agro">
+                        <div class="module-header">
+                            <h2 class="module-title">СВІТОВІ АГРОНОВИНИ</h2>
+                        </div>
+                        <div class="news-list"></div>
+                    </section>
+
+                    <section class="module" id="mod-innov_agro">
+                        <div class="module-header">
+                            <h2 class="module-title">НОВИНКИ ТА ІННОВАЦІЇ</h2>
+                        </div>
+                        <div class="news-list"></div>
+                    </section>
+                </div>
+            </main>
                 <div class="module utility-module">
                     <div class="module-header">
                         <h2>СИСТЕМНІ ДАНІ</h2>
