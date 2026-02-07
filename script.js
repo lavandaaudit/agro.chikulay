@@ -37,6 +37,18 @@ const DATA_SOURCES = {
 
 const UPDATE_INTERVAL = 60000; // 1 minute
 const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const TRANSLATE_API = 'https://api.mymemory.translated.net/get?q=';
+
+async function translateText(text) {
+    if (!text || /[а-яіїєґ]/i.test(text)) return text; // Skip if already looks like Cyrillic
+    try {
+        const res = await fetch(`${TRANSLATE_API}${encodeURIComponent(text)}&langpair=en|uk`);
+        const data = await res.json();
+        return data.responseData.translatedText || text;
+    } catch (e) {
+        return text;
+    }
+}
 
 // State
 let appState = {
@@ -143,10 +155,17 @@ async function fetchCategory(category, elementId) {
         const data = await response.json();
 
         if (data.status === 'ok' && data.items.length > 0) {
-            appState.news[category] = data.items;
-            logSystem(`OK: ${catName} (${data.items.length} новин)`);
+            // Translate items if needed
+            const translatedItems = await Promise.all(data.items.slice(0, 10).map(async item => {
+                const translatedTitle = await translateText(item.title);
+                const translatedDesc = await translateText(item.description || '');
+                return { ...item, title: translatedTitle, description: translatedDesc };
+            }));
 
-            const item = data.items[0];
+            appState.news[category] = translatedItems;
+            logSystem(`OK: ${catName} (${translatedItems.length} новин)`);
+
+            const item = translatedItems[0];
             let imgUrl = null;
             if (item.enclosure && item.enclosure.link) imgUrl = item.enclosure.link;
             else if (item.thumbnail) imgUrl = item.thumbnail;
